@@ -3,13 +3,13 @@ name:Ibama Expressions
 description:Plugin add new functions in expression
 about:This plugin add the functions in expression:
      dms_x, dms_y,getNameFile, existsFile,
-     getDateLandsat, getDateRapideye, getDateSentinel,
+     getDateLandsat, getDateRapideye, getDateSentinel, getDatePlanetScope
      area_crs, is_selected
 
 author:Luiz Motta
 email:motta.luiz@gmail.com
 
-version:0.1
+version:0.2
 qgisMinimumVersion:3.2
 
 experimental:True
@@ -24,6 +24,8 @@ homepage:https://github.com/lmotta/ibama_expressions/wiki
 tracker:https://github.com/lmotta/ibama_expressions/issues
 repository:https://github.com/lmotta/ibama_expressions
 
-changelog: 0.1(2019-02-19)
-    Migrate to QGIS 3.
-    Old version was being used internally at IBAMA
+changelog: 0.2(2019-11-27)
+  Added getDatePlanetScope
+  - 0.1(2019-02-19)
+  Migrate to QGIS 3.
+  Old version was being used internally at IBAMA

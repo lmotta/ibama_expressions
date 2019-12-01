@@ -47,16 +47,17 @@ def getDMS(geom, crs_id, layer_id, typeCoordinates):
             return { 'direction': dd >= 0.0, 'degrees': degrees, 'minutes': minutes, 'seconds': seconds }
 
         def formatDMS(dms):
-            ( d, m ) = tuple( map( lambda v: f"{v:02.0f}", ( dms['degrees'], dms['minutes'] ) ) )
-            s = f"{dms['seconds']:05.2f}"
+            ( d, m ) = tuple( map( lambda v: "{:02.0f}".format( v ), ( dms['degrees'], dms['minutes'] ) ) )
+            s = "{:05.2f}".format( dms['seconds'] )
             o = direction[ dms['direction'] ]
-            return f"{d}° {m}' {s}\" {o}"
+            return "{}° {}' {}\" {}".format( d, m, s, o )
 
         return formatDMS( decdeg2dms( dd ) )
 
     def checkRange(coord, limits, typeCoord):
         if not ( limits[0] <= coord <= limits[1] ):
-            msg = f"Coordinate '{coord}' out of range({limits[0]} <= {typeCoord} <= {limits[1]})"
+            data = ( coord, limits[0], typeCoord, limits[1] )
+            msg = "Coordinate '{}' out of range({} <= {} <= {})".format( *data )
             return {
                 'isOk': False,
                 'message': msg
@@ -67,10 +68,10 @@ def getDMS(geom, crs_id, layer_id, typeCoordinates):
         raise Exception("Enter with ID CRS with string type(Ex.: 'EPSG:4326')")
     crsDest = QgsCoordinateReferenceSystem( crs_id )
     if not crsDest.isValid():
-        msg = f"ID EPSG '{crs_id}' is not valid"
+        msg = "ID EPSG '{}' is not valid".format( crs_id )
         raise Exception(msg)
     if not crsDest.isGeographic():
-        msg = f"ID CRS '{crs_id}' is not Geographic"
+        msg = "ID CRS '{}' is not Geographic".format( crs_id  )
         raise Exception(msg)
     project = QgsProject.instance()
     layer = project.mapLayer( layer_id )
@@ -140,7 +141,7 @@ def getFileName(value, feature, parent):
         info = QFileInfo( value )
         name = info.completeBaseName()
     except:
-        msg = f"Enter with File name. Value = '{value}'."
+        msg = "Enter with File name. Value = '{}'.".format( value )
         raise Exception( msg )
     return name
 
@@ -156,7 +157,7 @@ def existsFile(value, feature, parent):
         info = QFileInfo( value )
         exists = info.isFile()
     except:
-        msg = f"Enter with File name. Value = '{value}'."
+        msg = "Enter with File name. Value = '{}'.".format( value )
         raise Exception( msg )
     return exists
 
@@ -168,7 +169,7 @@ def getDateLandsat(value, feature, parent):
   <p><h4>Argument</h4>File name of Landsat</p>
   <p><h4>Example</h4>getDateLandsat('LC81390452014295LGN00.tif')</p>
     """
-    msgError = f"Enter with landsat name (ex. 'LC81390452014295LGN00'). Value = '{value}'."
+    msgError = "Enter with landsat name (ex. 'LC81390452014295LGN00'). Value = '{}'.".format( value )
     if not value[3:16].isdigit():
         raise Exception( msgError )
     try:
@@ -189,7 +190,7 @@ def getDateRapideye(value, feature, parent):
   <p><h4>Argument</h4>File name of Rapideye</p>
   <p><h4>Example</h4>getDateRapideye('2227625_2012-12-26T142009_RE1_3A-NAC_14473192_171826.tif')</p>
     """
-    msgError = f"Enter with Rapideye name (ex. '2227625_2012-12-26T142009_RE1_3A-NAC_14473192_171826'). Value = '{value}'."
+    msgError = "Enter with Rapideye name (ex. '2227625_2012-12-26T142009_RE1_3A-NAC_14473192_171826'). Value = '{}'.".format( value )
     try:
         v_date = QDate.fromString( value.split('_')[1][:10], "yyyy-MM-dd" )
     except:
@@ -206,9 +207,26 @@ def getDateSentinel(value, feature, parent):
   <p><h4>Argument</h4>File name of Sentinel</p>
   <p><h4>Example</h4>getDateSentinel('s1a-ew-grd-hh-20141031t223708-20141031t223811-003079-003869-001.tif')</p>
     """
-    msgError = f"Enter with Sentinel name (ex. 's1a-ew-grd-hh-20141031t223708-20141031t223811-003079-003869-001'). Value = '{value}'."
+    msgError = "Enter with Sentinel name (ex. 's1a-ew-grd-hh-20141031t223708-20141031t223811-003079-003869-001'). Value = '{}'.".format( value )
     try:
         v_date = QDate.fromString( value.split('-')[5][:8], "yyyyMMdd" )
+    except:
+        raise Exception( msgError )
+    if not v_date.isValid():
+        raise Exception( msgError )
+    return v_date
+
+@qgsfunction(args='auto', group='Ibama', register=False, usesgeometry=False, referenced_columns=[])
+def getDatePlanetScope(value, feature, parent):
+    """
+  <h4>Return</h4>QDate from file name of PlanetScope
+  <p><h4>Syntax</h4>getDatePlanetScope(name_planetscope)</p>
+  <p><h4>Argument</h4>File name of PlanetScope</p>
+  <p><h4>Example</h4>getDatePlanetScope('PSScene4Band_20190310_131656_0f4a.tif')</p>
+    """
+    msgError = "Enter with PlanetScope name (ex. 'PSScene4Band_20190310_131656_0f4a'). Value = '{}'.".format( value )
+    try:
+        v_date = QDate.fromString( value.split('_')[1], "yyyyMMdd" )
     except:
         raise Exception( msgError )
     if not v_date.isValid():
@@ -230,10 +248,10 @@ def area_crs(value, feature, parent, context):
         raise Exception("Enter with ID CRS with string type(Ex.: 'EPSG:4326')")
     crsDest = QgsCoordinateReferenceSystem( crs_id )
     if not crsDest.isValid():
-        msg = f"ID EPSG '{crs_id}' is not valid"
+        msg = "ID EPSG '{}' is not valid".format( crs_id )
         raise Exception(msg)
     if crsDest.isGeographic():
-        msg = f"ID CRS '{crs_id}' is Geographic"
+        msg = "ID CRS '{}' is Geographic".format( crs_id )
         raise Exception(msg)
     project = QgsProject.instance()
     layer = project.mapLayer( layer_id )
@@ -261,7 +279,7 @@ def is_selected(value, feature, parent, context):
 l_functions = (
     dms_x, dms_y,
     getFileName, existsFile,
-    getDateLandsat, getDateRapideye, getDateSentinel,
+    getDateLandsat, getDateRapideye, getDateSentinel, getDatePlanetScope, 
     area_crs,
     is_selected
 )

@@ -9,7 +9,7 @@
 
 This plugin add the functions in expressions:
 dms_x, dms_y,getNameFile, existsFile,
-getDateLandsat, getDateRapideye, getDateSentinel,
+getDateLandsat, getDateRapideye, getDateSentinel, getDatePlanetScope
 area_crs,
 is_selected
 
@@ -17,6 +17,8 @@ is_selected
 Luiz Motta
 
 ## Changelog
+- 2019-11-27
+Added getDatePlanetScope
 - 2019-02-19
 Migrate to QGIS 3.
 Old version was being used internally at IBAMA
