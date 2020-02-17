@@ -8,15 +8,16 @@
 # Ibama Expressions
 
 This plugin add the functions in expressions:
-dms_x, dms_y,getNameFile, existsFile,
 getDateLandsat, getDateRapideye, getDateSentinel, getDatePlanetScope
-area_crs,
-is_selected
+area_crs and getUTMZone
+
 
 ## Author
 Luiz Motta
 
 ## Changelog
+- 2020-02-17
+Added getUTMZone, removed dms_x, dms_y, is_selected, existsFile and getFileName
 - 2019-11-27
 Added getDatePlanetScope
 - 2019-02-19

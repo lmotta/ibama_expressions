@@ -9,10 +9,10 @@ about:This plugin add the functions in expression:
 author:Luiz Motta
 email:motta.luiz@gmail.com
 
-version:0.2
+version:0.3
 qgisMinimumVersion:3.2
 
-experimental:True
+experimental:False
 deprecated:False
 
 icon:ibama_expressions.svg
@@ -24,7 +24,9 @@ homepage:https://github.com/lmotta/ibama_expressions/wiki
 tracker:https://github.com/lmotta/ibama_expressions/issues
 repository:https://github.com/lmotta/ibama_expressions
 
-changelog: 0.2(2019-11-27)
+changelog: 0.3(2020-02-17)
+  Added getUTMZone, removed dms_x, dms_y, is_selected, existsFile and getFileName
+  - 0.2(2019-11-27)
   Added getDatePlanetScope
   - 0.1(2019-02-19)
   Migrate to QGIS 3.
