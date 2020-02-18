@@ -15,33 +15,20 @@
   * Output: Area with unit of CRS.
   * Example: area_crs('EPSG:5671') -> 223220950780.08203
 
-* dms_x: Get a longitude with Degree Minute and Seconds.
-  * Input: Definition of CRS ID.  
-  Ex.: 'EPSG:4326'.  
-  \* The CRS need be geographic.
-  * Output: A longitude with Degree Minute and Seconds.
-  * Example: dms_x('EPSG:4326') -> '50° 57' 42.87" W'
-
-* dms_y: Get a latitude with Degree Minute and Seconds
-  * Input: Definition of CRS ID.  
-  Ex.: 'EPSG:4326'.  
-  \* The CRS need be geographic.
-  * Output: A latitude with Degree Minute and Seconds.
-  * Example: dms_y('EPSG:4326') -> '08° 44' 16.97" S'
-
-* existFile: Return a boolean, where, ***true*** exists and ***false*** otherwise.
-  * Input: Pathfile  
-  Ex.: '/home/lmotta/data/tif/224_066_08082009.tif'  
-  * Output: true or false
-  * Example:  
-  existsFile( '/home/lmotta/data/tif/224_066_08082009.tif'  ) -> true
-
 * getDateLandsat: Return a date.
   * Input: Name of image(landsat format).  
   Ex.: 'LC81390452014295LGN00.tif'  
   * Output: The date of name.
   * Example:  
   getDateLandsat('LC81390452014295LGN00.tif') -> <date: 2014-10-22>
+
+* getDatePlanetScope: Return a date.
+  * Input: Name of image(planet scope format).  
+  Ex.: 'PSScene4Band_20190310_131656_0f4a.tif'  
+  * Output: The date of name.
+  * Example:  
+  getDateLandsat('PSScene4Band_20190310_131656_0f4a.tif') -> <date: 2019-03-10>
+
 
 * getDateRapideye: Return a date.
   * Input: Name of image(rapideye format).  
@@ -57,9 +44,10 @@
   * Example:  
   getDateSentinel('s1a-ew-grd-hh-20141031t223708-20141031t223811-003079-003869-001.tif') -> <date: 2014-10-31>
 
-* getFileName: Return the name of file(without extension).
-  * Input: Pathfile.  
-  Ex.: '/home/user/readme.txt'
-  * Output: Name of file.
+* getUTMZone: Return the UTM Zone.
+Number(Longitude zone) and character(Latitude zone).  
+\* [UTM Grid Zones of the World](http://www.dmap.co.uk/utmworld.htm)
+  * Input: None.
+  * Output: UTM Zone.
   * Example:  
-  getFileName('/home/user/readme.txt') -> 'readme'
+  getUTMzone() -> '20M'

@@ -2,9 +2,8 @@
 name:Ibama Expressions
 description:Plugin add new functions in expression
 about:This plugin add the functions in expression:
-     dms_x, dms_y,getNameFile, existsFile,
      getDateLandsat, getDateRapideye, getDateSentinel, getDatePlanetScope
-     area_crs, is_selected
+     getUTMZone and area_crs
 
 author:Luiz Motta
 email:motta.luiz@gmail.com
