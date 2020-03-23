@@ -55,8 +55,8 @@ def getUTMZone(feature, parent, context):
     <p> Point: The coordinate itself</p>
     <p> Line: The coordinate of center</p>
     <p> Polygon: The coordinate of centroid</p>
-  <p><h4>Syntax</h4>getUTM()</p>
-  <p><h4>Example</h4>getUTM() --> 20M</p>
+  <p><h4>Syntax</h4>getUTMZone()</p>
+  <p><h4>Example</h4>getUTMZone() --> 20M</p>
     """
     geom = feature.geometry().centroid()
     layer_id = context.variable('layer_id')
