@@ -16,8 +16,12 @@ area_crs and getUTMZone
 Luiz Motta
 
 ## Changelog
+- 2020-03-23
+  Rename getDateSentinel to getDateSentinel1,
+  Added: getDateSentinel2
 - 2020-02-17
-Added getUTMZone, removed dms_x, dms_y, is_selected, existsFile and getFileName
+Added getUTMZone,
+Removed: dms_x, dms_y, is_selected, existsFile and getFileName
 - 2019-11-27
 Added getDatePlanetScope
 - 2019-02-19

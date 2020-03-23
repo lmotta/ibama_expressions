@@ -18,6 +18,9 @@ email                : motta.luiz@gmail.com
  ***************************************************************************/
 
 Updates/New:
+- 2020-03-23:
+    - Rename: getDateSentinel to getDateSentinel1
+    - New: getDateSentinel2
 - 2020-02-12:
     - New: getUTM, getCRSLayer
     - Update: getCRSLayer, area_crs
@@ -113,16 +116,33 @@ def getDateRapideye(name, feature, parent):
     return v_date
 
 @qgsfunction(args='auto', group='Ibama', register=False, usesgeometry=False, referenced_columns=[])
-def getDateSentinel(name, feature, parent):
+def getDateSentinel1(name, feature, parent):
     """
-  <h4>Return</h4>QDate from file name of Sentinel
-  <p><h4>Syntax</h4>getDateSentinel(name_sentinel)</p>
-  <p><h4>Argument</h4>File name of Sentinel</p>
-  <p><h4>Example</h4>getDateSentinel('s1a-ew-grd-hh-20141031t223708-20141031t223811-003079-003869-001.tif')</p>
+  <h4>Return</h4>QDate from file name of Sentinel1
+  <p><h4>Syntax</h4>getDateSentinel1(name_sentinel)</p>
+  <p><h4>Argument</h4>File name of Sentinel1</p>
+  <p><h4>Example</h4>getDateSentinel1('s1a-ew-grd-hh-20141031t223708-20141031t223811-003079-003869-001.tif')</p>
     """
-    msgError = f"Enter with Sentinel name (ex. 's1a-ew-grd-hh-20141031t223708-20141031t223811-003079-003869-001'). Value = '{name}'."
+    msgError = f"Enter with Sentinel1 name (ex. 's1a-ew-grd-hh-20141031t223708-20141031t223811-003079-003869-001'). Value = '{name}'."
     try:
         v_date = QDate.fromString( name.split('-')[5][:8], "yyyyMMdd" )
+    except:
+        raise Exception( msgError )
+    if not v_date.isValid():
+        raise Exception( msgError )
+    return v_date
+
+@qgsfunction(args='auto', group='Ibama', register=False, usesgeometry=False, referenced_columns=[])
+def getDateSentinel2(name, feature, parent):
+    """
+  <h4>Return</h4>QDate from file name of Sentinel2
+  <p><h4>Syntax</h4>getDateSentinel2(name_sentinel)</p>
+  <p><h4>Argument</h4>File name of Sentinel2</p>
+  <p><h4>Example</h4>getDateSentinel2('S2A_MSIL1C_20170105T013442_N0204_R031_T53NMJ_20170105T013443.tif')</p>
+    """
+    msgError = f"Enter with Sentinel2 name (ex. 'S2A_MSIL1C_20170105T013442_N0204_R031_T53NMJ_20170105T013443'). Value = '{name}'."
+    try:
+        v_date = QDate.fromString( name.split('_')[2][:8], "yyyyMMdd" )
     except:
         raise Exception( msgError )
     if not v_date.isValid():
@@ -174,7 +194,9 @@ def area_crs(crs_id, feature, parent, context):
 # //////// Register of Expressions Functions \\\\\\\\
 l_functions = (
     getUTMZone,
-    getDateLandsat, getDateRapideye, getDateSentinel, getDatePlanetScope, 
+    getDateLandsat, getDateRapideye,
+    getDateSentinel1, getDateSentinel2,
+    getDatePlanetScope, 
     area_crs
 )
 def registerFunctions(isRegister=True):
