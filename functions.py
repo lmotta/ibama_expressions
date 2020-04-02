@@ -191,14 +191,6 @@ def area_crs(crs_id, feature, parent, context):
         geom.transform( ct )
     return geom.area()
 
-# //////// Register of Expressions Functions \\\\\\\\
-l_functions = (
-    getUTMZone,
-    getDateLandsat, getDateRapideye,
-    getDateSentinel1, getDateSentinel2,
-    getDatePlanetScope, 
-    area_crs
-)
 def registerFunctions(isRegister=True):
     if isRegister:
         f_r = QgsExpression.registerFunction
@@ -206,7 +198,8 @@ def registerFunctions(isRegister=True):
     else:
         f_r = QgsExpression.unregisterFunction
         arg_f = lambda f: f.name()
-    
-    for f in l_functions:
+
+    g = globals()
+    l_func = ( g[v] for v in g if hasattr(g[v], 'usesGeometry') )
+    for f in l_func:
         f_r( arg_f( f ) )
-# \\\\\\\\ Register of Expressions Functions ////////
