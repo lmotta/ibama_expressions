@@ -18,6 +18,8 @@ email                : motta.luiz@gmail.com
  ***************************************************************************/
 
 Updates/New:
+- 2020-04-01:
+    - Refactored using global
 - 2020-03-23:
     - Rename: getDateSentinel to getDateSentinel1
     - New: getDateSentinel2
@@ -192,14 +194,10 @@ def area_crs(crs_id, feature, parent, context):
     return geom.area()
 
 def registerFunctions(isRegister=True):
-    if isRegister:
-        f_r = QgsExpression.registerFunction
-        arg_f = lambda f: f
-    else:
-        f_r = QgsExpression.unregisterFunction
-        arg_f = lambda f: f.name()
-
+    t_register = ( QgsExpression.registerFunction, lambda f: f )
+    u_register = ( QgsExpression.unregisterFunction, lambda f: f.name() )
+    ( funcReg, funcArg ) = t_register if isRegister else u_register
     g = globals()
     l_func = ( g[v] for v in g if hasattr(g[v], 'usesGeometry') )
     for f in l_func:
-        f_r( arg_f( f ) )
+        funcReg( funcArg( f ) )
